@@ -1,6 +1,8 @@
 import { handleActions, createAction } from 'redux-actions';
 import Papa from 'papaparse';
 
+export const startGame = createAction('startGame');
+
 export const setData = createAction('setData');
 export const clearData = createAction('clearData');
 
@@ -21,6 +23,10 @@ export const loadData = () => dispatch => {
 
 export default handleActions(
   {
+    [startGame]: state => state.map(row => ({
+      ...row,
+      order: 0,
+    })),
     [setData]: (state, { payload }) => payload,
     [clearData]: () => [],
   },

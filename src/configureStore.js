@@ -4,6 +4,7 @@ import { routerMiddleware } from 'connected-react-router'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
 import thunk from 'redux-thunk';
+import logger from 'redux-logger'
 import rootReducer from './reducers'
 
 const persistConfig = {
@@ -22,6 +23,7 @@ export const store = createStore(
     applyMiddleware(
       routerMiddleware(history), // for dispatching history actions
       thunk,
+      logger,
       // ... other middlewares ...
     ),
   ),

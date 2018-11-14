@@ -1,26 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadData } from '../data/ducks';
+import { startGame } from '../data/ducks';
 
 class Start extends Component {
-  componentDidMount() {
-    this.props.actions.loadData();
-  }
-
   render() {
     return (
-      <button>Start</button>
+      <button onClick={this.props.actions.startGame}>Start</button>
     )
   }
 }
-
 
 export default connect(
   state => {
     console.log(state);
     return state;
   }, dispatch => ({
-    actions: bindActionCreators({ loadData }, dispatch)
+    actions: bindActionCreators({ startGame }, dispatch)
   })
 )(Start);

@@ -1,13 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
+import Progress from './components/Progress';
 
-class Question extends Component {
-  render() {
-    return (
-      <div>
-        1
-      </div>
-    )
-  }
+function Question({ children, onSubmit }) {
+  return (
+    <div>
+      <Progress value={22} />
+      <br />
+      {children}
+      <br />
+      <button onClick={onSubmit}>Продолжить</button>
+    </div>
+  )
 }
 
-export default Question;
+export default Question

@@ -1,0 +1,19 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
+function Progress({ value, max }) {
+  return (
+    <progress value={value} max={max} />
+  )
+}
+
+Progress.propTypes = {
+  value: PropTypes.number.isRequired,
+  max: PropTypes.number,
+}
+
+Progress.defaultProps = {
+  max: 100,
+}
+
+export default Progress

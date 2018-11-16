@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadData } from './data/ducks';
 import Question from './containers/Question';
+import CheckboxQuestion from './containers/CheckboxQuestion';
 import Start from './containers/Start';
 
 class Routing extends Component {
@@ -16,6 +17,7 @@ class Routing extends Component {
       <Switch>
         <Route exact path="/" component={Start} />
         <Route exact path="/1" component={Question} />
+        <Route exact path="/checkbox" component={CheckboxQuestion} />
         <Route render={() => (<div>Miss</div>)} />
       </Switch>
     )

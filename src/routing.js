@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadData } from './data/ducks';
 import Question from './containers/Question';
+import CheckboxQuestion from './containers/CheckboxQuestion';
 import Start from './containers/Start';
 import RadioQuestion from './containers/RadioQuestion';
 
@@ -16,6 +17,7 @@ class Routing extends Component {
     return (
       <Switch>
         <Route exact path="/" component={Start} />
+        <Route exact path="/checkbox" component={CheckboxQuestion} />
         <Route exact path="/1" render={() =>
           <RadioQuestion
             title="Хочешь, чтобы было тепло или это не важно?"

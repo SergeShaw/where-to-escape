@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import options from './QuestionConfigurator';
+import Question from '../Question';
 
 class CheckboxQuestion extends Component {
   state = { options, changes: '' };
@@ -22,20 +23,16 @@ class CheckboxQuestion extends Component {
     }));
   }
 
-  handleSubmit = event => {
+  handleSubmit = () => {
     const { options } = this.state;
-    event.preventDefault();
 
-    let newChanges = '';
-
-    options.forEach(option => {
-      if (option.checked) {
-        newChanges += option.changeDataValues() + ' ';
-      }
-    })
+    const changes = options
+      .filter(option => option.checked)
+      .map(option => option.changeDataValues())
+      .join(' ');
 
     this.setState({
-      changes: newChanges
+      changes,
     });
   }
 
@@ -43,24 +40,22 @@ class CheckboxQuestion extends Component {
     const { options, changes } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit} style={{ display: 'inline-grid' }}>
+      <Question onSubmit={this.handleSubmit}>
         {options.map(option =>
           <label key={option.id}>
-            {option.text}:
             <input
               name={option.id}
               type="checkbox"
               checked={option.checked}
               onChange={this.handleInputChange} />
+            {option.text}
+            <br />
           </label>
         )}
-        <button type="submit">
-          Go next
-        </button>
         <div>
           {changes}
         </div>
-      </form>
+      </Question>
     );
   }
 }

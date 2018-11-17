@@ -7,7 +7,7 @@ export const setData = createAction('setData');
 export const clearData = createAction('clearData');
 
 export const loadData = () => dispatch => {
-  Papa.parse("http://localhost:3003/where-to-escape.csv", {
+  Papa.parse("http://localhost:3000/where-to-escape.csv", {
     download: true,
     header: true,
     trimHeaders: true,

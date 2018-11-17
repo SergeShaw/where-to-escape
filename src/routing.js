@@ -7,6 +7,7 @@ import Question from './containers/Question';
 import CheckboxQuestion from './containers/CheckboxQuestion';
 import Start from './containers/Start';
 import RadioQuestion from './containers/RadioQuestion';
+import { PROPERTIES_NAMES } from './data/constants';
 
 class Routing extends Component {
   componentDidMount() {
@@ -22,10 +23,26 @@ class Routing extends Component {
           <RadioQuestion
             title="Хочешь, чтобы было тепло или это не важно?"
             options={[
-              { text: "Хочу, чтобы было очень жарко" },
-              { text: "Мне не важно" },
-              { text: "Мне нравится когда холодно" },
-              { text: "Люблю умеренный климат" },
+              {
+                text: "Хочу, чтобы было очень жарко",
+                calculate: dataRow =>
+                  dataRow[PROPERTIES_NAMES.T_WINTER] >= 5 && dataRow[PROPERTIES_NAMES.T_SUMMER] >= 25
+              },
+              {
+                text: "Мне не важно",
+                calculate: () => false
+              },
+              {
+                text: "Мне нравится когда холодно",
+                calculate: dataRow =>
+                  dataRow[PROPERTIES_NAMES.T_WINTER] <= -10 && dataRow[PROPERTIES_NAMES.T_SUMMER] <= 15
+              },
+              {
+                text: "Люблю умеренный климат",
+                calculate: dataRow =>
+                  dataRow[PROPERTIES_NAMES.T_WINTER] >= -10 && dataRow[PROPERTIES_NAMES.T_WINTER] <= 5 &&
+                  dataRow[PROPERTIES_NAMES.T_SUMMER] >= 15 && dataRow[PROPERTIES_NAMES.T_SUMMER] <= 25
+              },
             ]}
           />
         } />

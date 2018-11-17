@@ -27,7 +27,10 @@ export default handleActions(
       ...row,
       order: 0,
     })),
-    [setData]: (state, { payload }) => payload,
+    [setData]: (state, { payload }) => payload.map(row => ({
+      ...row,
+      order: 0,
+    })),
     [clearData]: () => [],
   },
   [],

@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux';
 import Question from './Question';
+import { setData } from '../data/ducks';
+import { PROPERTIES_NAMES } from '../data/constants';
 
-function RadioQuestion({ title, options }) {
+function RadioQuestion({ title, options, actions, data }) {
   const [value, setValue] = useState(undefined);
 
   function handleOnSubmit() {
@@ -10,7 +14,15 @@ function RadioQuestion({ title, options }) {
       console.log('cannot submit without value')
       return;
     }
-    console.log(`Submited with value - ${value} - ${options[value].text}`);
+
+    console.log(data.map(row => row.order))
+    const newData = data.map(row => ({
+      ...row,
+      order: row.order += value.calculate(row),
+    }))
+    console.log(`Submited with value - ${value} - ${value.text}`, data, newData);
+    console.log(newData.filter(row => row.order).map(row => row[PROPERTIES_NAMES.COUNTRY]))
+    actions.setData(newData);
   }
 
   return (
@@ -22,8 +34,8 @@ function RadioQuestion({ title, options }) {
           <input
             type="radio"
             name={title}
-            value={value}
-            onClick={() => setValue(index)}
+            value={value && value.text === option.text}
+            onClick={() => setValue(option)}
           />
           {option.text}
           <br />
@@ -40,6 +52,20 @@ RadioQuestion.propTypes = {
       text: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({}),
+  ).isRequired,
+
+  actions: PropTypes.shape({
+    setData: PropTypes.func.isRequired,
+  }),
 };
 
-export default RadioQuestion
+export default connect(
+  state => ({
+    data: state.data,
+  }),
+  dispatch => ({
+    actions: bindActionCreators({ setData }, dispatch)
+  })
+)(RadioQuestion);

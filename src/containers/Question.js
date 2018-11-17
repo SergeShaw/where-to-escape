@@ -13,4 +13,4 @@ function Question({ children, onSubmit }) {
   )
 }
 
-export default Question
+export default Question;

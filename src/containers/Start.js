@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Button from '@material-ui/core/Button';
 import { startGame } from '../data/ducks';
 
 class Start extends Component {
   render() {
     return (
-      <button onClick={this.props.actions.startGame}>Start</button>
+      <Button variant="outlined" color="primary" onClick={this.props.actions.startGame}>Start</Button>
     )
   }
 }

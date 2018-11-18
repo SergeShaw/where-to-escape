@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import LinearProgress from '@material-ui/core/LinearProgress';
 
-function Progress({ value, max }) {
-  return (
-    <progress value={value} max={max} />
-  )
+function Progress({ value, max, classes }) {
+  return <LinearProgress variant="determinate" value={value / max * 100} />;
 }
 
 Progress.propTypes = {
@@ -16,4 +15,4 @@ Progress.defaultProps = {
   max: 100,
 }
 
-export default Progress
+export default Progress;

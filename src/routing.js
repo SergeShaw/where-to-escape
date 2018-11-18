@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router' // react-router v4
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loadData } from './data/ducks';
-import Question from './containers/Question';
+import Question from './containers/Question/Question';
 import CheckboxQuestion from './containers/CheckboxQuestion';
 import Start from './containers/Start';
 import RadioQuestion from './containers/RadioQuestion';

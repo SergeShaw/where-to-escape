@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import options from './QuestionConfigurator';
-import Question from '../Question';
+import Question from '../Question/Question';
 
 class CheckboxQuestion extends Component {
   state = { options, changes: '' };
@@ -40,7 +40,7 @@ class CheckboxQuestion extends Component {
     const { options, changes } = this.state;
 
     return (
-      <Question onSubmit={this.handleSubmit}>
+      <Question title="title" onSubmit={this.handleSubmit}>
         {options.map(option =>
           <label key={option.id}>
             <input

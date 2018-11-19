@@ -1,22 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { push } from 'connected-react-router'
 import Button from '@material-ui/core/Button';
 import { startGame } from '../data/ducks';
 
-class Start extends Component {
-  render() {
-    return (
-      <Button variant="outlined" color="primary" onClick={this.props.actions.startGame}>Start</Button>
-    )
+function Start({ startGame, push }) {
+  function handelStart() {
+    startGame();
+    push("/question/1");
   }
+
+  return (
+    <Button
+      variant="outlined"
+      color="primary"
+      onClick={handelStart}
+    >Start</Button>
+  );
 }
 
-export default connect(
-  state => {
-    console.log(state);
-    return state;
-  }, dispatch => ({
-    actions: bindActionCreators({ startGame }, dispatch)
-  })
-)(Start);
+export default connect(null, { startGame, push })(Start);

@@ -8,13 +8,13 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 
-import Question from './Question/Question';
 import { setData } from '../data/ducks';
 import { PROPERTIES_NAMES } from '../data/constants';
 
-function RadioQuestion({ title, options, actions, data }) {
+function RadioQuestion({ title, options, actions, data, onSubmit }) {
   const [value, setValue] = useState(undefined);
 
+  // TODO: move to Question
   function handleOnSubmit() {
     if (!value) {
       console.log('cannot submit without value');
@@ -42,25 +42,23 @@ function RadioQuestion({ title, options, actions, data }) {
   }
 
   return (
-    <Question title={title} onSubmit={handleOnSubmit}>
-      <RadioGroup
-        aria-label="Gender"
-        name="gender1"
-        value={value}
-        onChange={event => setValue(event.target.value)}
-      >
-        {options.map(option =>
-          <FormControlLabel
-            key={option.text}
-            value={option.text}
-            control={<Radio />}
-            label={
-              <Typography variant="h5">
-                {option.text}
-              </Typography>} />
-        )}
-      </RadioGroup>
-    </Question>
+    <RadioGroup
+      aria-label={title}
+      name={title}
+      value={value}
+      onChange={event => setValue(event.target.value)}
+    >
+      {options.map(option =>
+        <FormControlLabel
+          key={option.text}
+          value={option.text}
+          control={<Radio />}
+          label={
+            <Typography variant="h5">
+              {option.text}
+            </Typography>} />
+      )}
+    </RadioGroup>
   )
 }
 
@@ -74,7 +72,7 @@ RadioQuestion.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({}),
   ).isRequired,
-
+  onSubmit: PropTypes.func.isRequired,
   actions: PropTypes.shape({
     setData: PropTypes.func.isRequired,
   }),

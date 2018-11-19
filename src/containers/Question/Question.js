@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -10,8 +10,12 @@ import Grid from '@material-ui/core/Grid';
 
 import Progress from '../components/Progress';
 import { styles } from './styles';
+import RadioQuestion from '../RadioQuestion';
+import { questions } from '../../data/questions';
 
 function Question({ children, onSubmit, classes, title }) {
+
+  const question = questions[0];
 
   return (
     <main className={classes.layout}>
@@ -27,7 +31,9 @@ function Question({ children, onSubmit, classes, title }) {
           </Grid>
           <Grid item xs={12}>
             <FormControl component="fieldset">
-              {children}
+              <RadioQuestion
+                title={question.title}
+                options={question.options} />
             </FormControl>
           </Grid>
           <Grid item xs={12} >
@@ -47,4 +53,6 @@ Question.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(Question);
+export default connect(state => ({
+  pathname: state.router.location.pathname,
+}))(withStyles(styles)(Question));

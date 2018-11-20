@@ -2,6 +2,7 @@ import { PROPERTIES_NAMES, QUESTION_TYPES, LANGUAGES } from "./constants";
 
 export const questions = [{
   id: 1,
+  nextId: 2,
   type: QUESTION_TYPES.RADIO,
   title: "Хочешь, чтобы было тепло или это не важно?",
   options: [
@@ -45,21 +46,21 @@ export const questions = [{
       text: 'Английский',
       multiple: true,
       calculate: countryData =>
-        countryData[PROPERTIES_NAMES.LANGUAGE].includes(LANGUAGES.ENGLISH),
+        (countryData[PROPERTIES_NAMES.LANGUAGE] || []).includes(LANGUAGES.ENGLISH),
     },
     {
       id: 3,
       text: 'Немецкий',
       multiple: true,
       calculate: countryData =>
-        countryData[PROPERTIES_NAMES.LANGUAGE].includes(LANGUAGES.GERMAN),
+        (countryData[PROPERTIES_NAMES.LANGUAGE] || []).includes(LANGUAGES.GERMAN),
     },
     {
       id: 4,
       text: 'Французский',
       multiple: true,
       calculate: countryData =>
-        countryData[PROPERTIES_NAMES.LANGUAGE].includes(LANGUAGES.FRENCH),
+        (countryData[PROPERTIES_NAMES.LANGUAGE] || []).includes(LANGUAGES.FRENCH),
     },
     {
       id: 5,

@@ -1,40 +1,29 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
-import { bindActionCreators } from 'redux';
-
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 
-import { setData } from '../data/ducks';
-import { PROPERTIES_NAMES } from '../data/constants';
-
-function RadioQuestion({ title, options, actions, data, onSubmit }) {
+function RadioQuestion({ title, options, onChange }) {
   const [value, setValue] = useState(undefined);
 
-  // TODO: move to Question
-  function handleOnSubmit() {
-    if (!value) {
+  function handleOnChange(event) {
+    const newValue = event.target.value;
+
+    if (!newValue) {
       console.log('cannot submit without value');
       return;
     }
 
-    const selectedOption = options.find(option => option.text === value);
+    const selectedOption = options.find(option => option.text === newValue);
     if (!selectedOption) {
       console.log('cannot find selected value');
       return;
     }
 
-    console.log(data.map(row => row.order))
-    const newData = data.map(row => ({
-      ...row,
-      order: row.order += selectedOption.calculate(row),
-    }))
-    console.log(`Submited with value - ${selectedOption.text}`, data, newData);
-    console.log(newData.filter(row => row.order).map(row => row[PROPERTIES_NAMES.COUNTRY]))
-    actions.setData(newData);
+    setValue(newValue);
+    onChange(selectedOption);
   }
 
   if (!options || !options.length) {
@@ -46,7 +35,7 @@ function RadioQuestion({ title, options, actions, data, onSubmit }) {
       aria-label={title}
       name={title}
       value={value}
-      onChange={event => setValue(event.target.value)}
+      onChange={handleOnChange}
     >
       {options.map(option =>
         <FormControlLabel
@@ -63,26 +52,13 @@ function RadioQuestion({ title, options, actions, data, onSubmit }) {
 }
 
 RadioQuestion.propTypes = {
+  onChange: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       text: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({}),
-  ).isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  actions: PropTypes.shape({
-    setData: PropTypes.func.isRequired,
-  }),
 };
 
-export default connect(
-  state => ({
-    data: state.data,
-  }),
-  dispatch => ({
-    actions: bindActionCreators({ setData }, dispatch)
-  })
-)(RadioQuestion);
+export default RadioQuestion;

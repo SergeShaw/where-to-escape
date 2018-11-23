@@ -66,6 +66,13 @@ function Question({ match, classes, data, setData, push }) {
           options={currentQuestion.options}
           onChange={handleOnChange} />
       }
+      case QUESTION_TYPES.ICON_CHECKBOX: {
+        return <CheckboxQuestion
+          title={currentQuestion.title}
+          isIconCheckbox={true}
+          options={currentQuestion.options}
+          onChange={handleOnChange} />
+      }
       default: {
         return null;
       }

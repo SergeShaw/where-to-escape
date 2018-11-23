@@ -10,6 +10,7 @@ export const PROPERTIES_NAMES = {
 export const QUESTION_TYPES = {
   RADIO: 'RADIO',
   CHECKBOX: 'CHECKBOX',
+  ICON_CHECKBOX: 'ICON_CHECKBOX',
 };
 
 export const COUNTRIES = {

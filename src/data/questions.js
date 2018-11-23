@@ -32,6 +32,7 @@ export const questions = [{
   ],
 }, {
   id: 2,
+  nextId: 3,
   type: QUESTION_TYPES.CHECKBOX,
   title: "Отношение к новым языкам",
   options: [
@@ -68,6 +69,47 @@ export const questions = [{
       multiple: false,
       calculate: countryData =>
         countryData[PROPERTIES_NAMES.RUSSIAN_SPEAKERS] >= 50,
+    },
+  ]
+}, {
+  id: 3,
+  type: QUESTION_TYPES.ICON_CHECKBOX,
+  title: "На чём любишь добираться до работы",
+  options: [
+    {
+      id: 1,
+      text: 'Велосипед',
+      multiple: true,
+      icon: 'directions_bike',
+      calculate: () => false,
+    },
+    {
+      id: 2,
+      text: 'Автомобиль',
+      multiple: true,
+      icon: 'directions_car',
+      calculate: () => false,
+    },
+    {
+      id: 3,
+      text: 'Пешком',
+      multiple: true,
+      icon: 'directions_walk',
+      calculate: () => false,
+    },
+    {
+      id: 4,
+      text: 'Общественный транспорт',
+      multiple: true,
+      icon: 'directions_bus',
+      calculate: () => false,
+    },
+    {
+      id: 5,
+      text: 'Такси',
+      multiple: true,
+      icon: 'local_taxi',
+      calculate: () => false,
     },
   ]
 }];

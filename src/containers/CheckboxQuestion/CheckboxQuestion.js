@@ -4,8 +4,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
+import Icon from '@material-ui/core/Icon';
 
-function CheckboxQuestion({ options, onChange }) {
+function CheckboxQuestion({ options, isIconCheckbox, onChange }) {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   function handleChange(event) {
@@ -46,17 +47,34 @@ function CheckboxQuestion({ options, onChange }) {
       {options.map(option =>
         <FormControlLabel
           key={option.id}
-          control={
+          control={isIconCheckbox ?
+            <Checkbox
+              name={`${option.id}`}
+              checked={isOptionChecked(option)}
+              onChange={handleChange}
+              icon={
+                <Icon style={{ fontSize: 70 }}>
+                  {option.icon}
+                </Icon>
+              }
+              checkedIcon={
+                <Icon color="primary" style={{ fontSize: 70 }}>
+                  {option.icon}
+                </Icon>
+              }
+            />
+            :
             <Checkbox
               name={`${option.id}`}
               checked={isOptionChecked(option)}
               onChange={handleChange}
             />
           }
-          label={
+          label={!isIconCheckbox ?
             <Typography variant="h5">
               {option.text}
             </Typography>
+            : null
           }
         />
       )}

@@ -11,11 +11,6 @@ function RadioQuestion({ title, options, onChange }) {
   function handleOnChange(event) {
     const newValue = event.target.value;
 
-    if (!newValue) {
-      console.log('cannot submit without value');
-      return;
-    }
-
     const selectedOption = options.find(option => option.text === newValue);
     if (!selectedOption) {
       console.log('cannot find selected value');
@@ -45,7 +40,9 @@ function RadioQuestion({ title, options, onChange }) {
           label={
             <Typography variant="h5">
               {option.text}
-            </Typography>} />
+            </Typography>
+          }
+        />
       )}
     </RadioGroup>
   )

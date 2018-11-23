@@ -12,10 +12,10 @@ import Grid from '@material-ui/core/Grid';
 import Progress from '../components/Progress';
 import { styles } from './styles';
 import RadioQuestion from '../RadioQuestion';
+import CheckboxQuestion from '../CheckboxQuestion';
 import { questions } from '../../data/questions';
 import { setData } from '../../data/ducks';
 import { QUESTION_TYPES } from '../../data/constants';
-// import CheckboxQuestion from '../CheckboxQuestion/CheckboxQuestion';
 
 function Question({ match, classes, data, setData, push }) {
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -39,10 +39,10 @@ function Question({ match, classes, data, setData, push }) {
   function handleOnSubmit() {
     const newData = data.map(row => ({
       ...row,
-      order: row.order += selectedOptions.reduce((sum, selectedOption) =>
+      order: row.order + selectedOptions.reduce((sum, selectedOption) =>
         sum + selectedOption.calculate(row), 0)
-
     }));
+
     setData(newData);
 
     if (!currentQuestion.nextId) {
@@ -61,7 +61,7 @@ function Question({ match, classes, data, setData, push }) {
           onChange={handleOnChange} />
       }
       case QUESTION_TYPES.CHECKBOX: {
-        return <RadioQuestion
+        return <CheckboxQuestion
           title={currentQuestion.title}
           options={currentQuestion.options}
           onChange={handleOnChange} />

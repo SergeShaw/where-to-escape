@@ -1,63 +1,56 @@
-import React, { Component } from 'react'
-import options from './QuestionConfigurator';
-import Question from '../Question/Question';
+import React, { useState } from 'react';
 
-class CheckboxQuestion extends Component {
-  state = { options, changes: '' };
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import Typography from '@material-ui/core/Typography';
 
-  handleInputChange = event => {
+function CheckboxQuestion({ options, onChange }) {
+  const [optionsWithChecked, setOptions] = useState(options.map(option => ({
+    ...option,
+    checked: false,
+  })));
+
+  function handleChange(event) {
     const { checked, name } = event.target;
 
-    const chosenOption = options
+    const chosenOption = optionsWithChecked
       .find(option => option.id === +name)
 
-    this.setState((state) => ({
-      options: state.options.map(option => ({
-        ...option,
-        checked: option.id === +name
-          ? checked
-          : chosenOption.isDependency || option.isDependency
-            ? false
-            : option.checked
-      }))
-    }));
+    const updatedOptions = optionsWithChecked.map(option => ({
+      ...option,
+      checked: option.id === +name
+        ? checked
+        : !chosenOption.multiple || !option.multiple
+          ? false
+          : option.checked
+    }))
+
+    setOptions(updatedOptions);
+    onChange(updatedOptions.filter(option => option.checked));
   }
 
-  handleSubmit = () => {
-    const { options } = this.state;
-
-    const changes = options
-      .filter(option => option.checked)
-      .map(option => option.changeDataValues())
-      .join(' ');
-
-    this.setState({
-      changes,
-    });
-  }
-
-  render() {
-    const { options, changes } = this.state;
-
-    return (
-      <Question title="title" onSubmit={this.handleSubmit}>
-        {options.map(option =>
-          <label key={option.id}>
-            <input
-              name={option.id}
-              type="checkbox"
+  return (
+    <FormGroup>
+      {optionsWithChecked.map(option =>
+        <FormControlLabel
+          key={option.id}
+          control={
+            <Checkbox
+              name={`${option.id}`}
               checked={option.checked}
-              onChange={this.handleInputChange} />
-            {option.text}
-            <br />
-          </label>
-        )}
-        <div>
-          {changes}
-        </div>
-      </Question>
-    );
-  }
+              onChange={handleChange}
+            />
+          }
+          label={
+            <Typography variant="h5">
+              {option.text}
+            </Typography>
+          }
+        />
+      )}
+    </FormGroup>
+  );
 }
 
 export default CheckboxQuestion;

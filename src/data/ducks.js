@@ -1,12 +1,10 @@
 import { handleActions, createAction } from 'redux-actions';
 import Papa from 'papaparse';
 
-export const startGame = createAction('startGame');
-
 export const setData = createAction('setData');
 export const clearData = createAction('clearData');
 
-export const loadData = () => dispatch => {
+export const startGame = () => dispatch => {
   Papa.parse("http://localhost:3000/where-to-escape.csv", {
     download: true,
     header: true,
@@ -16,17 +14,16 @@ export const loadData = () => dispatch => {
         console.error('cannot load data');
         return;
       }
-      dispatch(setData(data.data));
+      dispatch(setData(data.data.map(row => ({
+        ...row,
+        order: 0,
+      }))));
     },
   });
 }
 
 export default handleActions(
   {
-    [startGame]: state => state.map(row => ({
-      ...row,
-      order: 0,
-    })),
     [setData]: (state, { payload }) => payload,
     [clearData]: () => [],
   },

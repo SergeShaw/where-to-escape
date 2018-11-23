@@ -6,39 +6,50 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
 
 function CheckboxQuestion({ options, onChange }) {
-  const [optionsWithChecked, setOptions] = useState(options.map(option => ({
-    ...option,
-    checked: false,
-  })));
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   function handleChange(event) {
     const { checked, name } = event.target;
 
-    const chosenOption = optionsWithChecked
-      .find(option => option.id === +name)
+    const chosenOption = options.find(option => option.id === +name);
 
-    const updatedOptions = optionsWithChecked.map(option => ({
-      ...option,
-      checked: option.id === +name
-        ? checked
-        : !chosenOption.multiple || !option.multiple
-          ? false
-          : option.checked
-    }))
+    if (!chosenOption) {
+      console.log('cannot find selected option');
+      return;
+    }
 
-    setOptions(updatedOptions);
-    onChange(updatedOptions.filter(option => option.checked));
+    if (checked) {
+      const newValues = chosenOption.multiple ?
+        [
+          ...selectedOptions.filter(selectedOption => selectedOption.multiple),
+          chosenOption
+        ] :
+        [chosenOption];
+      setSelectedOptions(newValues);
+      onChange(newValues);
+    } else {
+      const newValues = selectedOptions.filter(selectedOption =>
+        selectedOption.id !== chosenOption.id);
+      setSelectedOptions(newValues);
+      onChange(newValues);
+    }
+  }
+
+  function isOptionChecked(option) {
+    return selectedOptions.some(selectedOption =>
+      selectedOption.id === option.id
+    );
   }
 
   return (
     <FormGroup>
-      {optionsWithChecked.map(option =>
+      {options.map(option =>
         <FormControlLabel
           key={option.id}
           control={
             <Checkbox
               name={`${option.id}`}
-              checked={option.checked}
+              checked={isOptionChecked(option)}
               onChange={handleChange}
             />
           }

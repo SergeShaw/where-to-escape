@@ -2,20 +2,21 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
+
+import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
-import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 
-import Progress from '../components/Progress';
-import { styles } from './styles';
-import RadioQuestion from '../RadioQuestion';
-import CheckboxQuestion from '../CheckboxQuestion';
 import { questions } from '../../data/questions';
 import { setData } from '../../data/ducks';
 import { QUESTION_TYPES } from '../../data/constants';
+import CheckboxQuestion from '../CheckboxQuestion';
+import Progress from '../components/Progress';
+import RadioQuestion from '../RadioQuestion';
+import SliderQuestion from '../SliderQuestion';
+import { styles } from './styles';
 
 function Question({ match, classes, data, setData, push }) {
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -50,6 +51,7 @@ function Question({ match, classes, data, setData, push }) {
       return null;
     }
     push(`/question/${currentQuestion.nextId}`);
+    setSelectedOptions([]);
   }
 
   function renderQuestion() {
@@ -73,6 +75,12 @@ function Question({ match, classes, data, setData, push }) {
           options={currentQuestion.options}
           onChange={handleOnChange} />
       }
+      case QUESTION_TYPES.SLIDER: {
+        return <SliderQuestion
+          title={currentQuestion.title}
+          options={currentQuestion.options}
+          onChange={handleOnChange} />
+      }
       default: {
         return null;
       }
@@ -92,9 +100,7 @@ function Question({ match, classes, data, setData, push }) {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <FormControl component="fieldset">
-              {renderQuestion()}
-            </FormControl>
+            {renderQuestion()}
           </Grid>
           <Grid item xs={12} >
             <Grid container justify="center">

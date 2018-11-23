@@ -73,6 +73,7 @@ export const questions = [{
   ]
 }, {
   id: 3,
+  nextId: 4,
   type: QUESTION_TYPES.ICON_CHECKBOX,
   title: "На чём любишь добираться до работы",
   options: [
@@ -110,6 +111,40 @@ export const questions = [{
       multiple: true,
       icon: 'local_taxi',
       calculate: () => false,
+    },
+  ]
+}, {
+  id: 4,
+  type: QUESTION_TYPES.SLIDER,
+  title: "Хочешь чтобы вокруг тебя было много или мало людей?",
+  options: [
+    {
+      id: 1,
+      text: 'Очень мало',
+      calculate: countryData => countryData[PROPERTIES_NAMES.POPULATION_DENSITY] <= 30 ||
+        !countryData[PROPERTIES_NAMES.BIG_CITIES_COUNT],
+    },
+    {
+      id: 2,
+      text: 'Мало',
+      calculate: countryData => countryData[PROPERTIES_NAMES.POPULATION_DENSITY] > 30 &&
+        countryData[PROPERTIES_NAMES.POPULATION_DENSITY] < 100,
+    },
+    {
+      id: 3,
+      text: 'Не важно',
+      calculate: () => false,
+    },
+    {
+      id: 4,
+      text: 'Много',
+      calculate: countryData => countryData[PROPERTIES_NAMES.POPULATION_DENSITY] >= 100 &&
+        countryData[PROPERTIES_NAMES.POPULATION_DENSITY] < 200,
+    },
+    {
+      id: 5,
+      text: 'Оочень много',
+      calculate: countryData => countryData[PROPERTIES_NAMES.POPULATION_DENSITY] >= 200,
     },
   ]
 }];

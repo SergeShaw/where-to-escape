@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
 import { questions } from '../../data/questions';
-import { setData } from '../../data/ducks';
+import { setData, finishGame } from '../../data/ducks';
 import { QUESTION_TYPES } from '../../data/constants';
 import CheckboxQuestion from '../CheckboxQuestion';
 import Progress from '../components/Progress';
@@ -18,7 +18,7 @@ import RadioQuestion from '../RadioQuestion';
 import SliderQuestion from '../SliderQuestion';
 import { styles } from './styles';
 
-function Question({ match, classes, data, setData, push }) {
+function Question({ match, classes, data, setData, push, finishGame }) {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const currentQuestionId = +match.params.id;
@@ -47,7 +47,7 @@ function Question({ match, classes, data, setData, push }) {
     setData(newData);
 
     if (!currentQuestion.nextId) {
-      push(`/`);
+      finishGame();
       return null;
     }
     push(`/question/${currentQuestion.nextId}`);
@@ -121,6 +121,7 @@ Question.propTypes = {
 
   push: PropTypes.func.isRequired,
   setData: PropTypes.func.isRequired,
+  finishGame: PropTypes.func.isRequired,
 };
 
 export default connect(state => (
@@ -130,6 +131,7 @@ export default connect(state => (
   }
 ), {
     setData,
+    finishGame,
     push,
   }
 )(withStyles(styles)(Question));

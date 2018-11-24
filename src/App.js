@@ -8,6 +8,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Question from './containers/Question/Question';
 import Start from './containers/Start';
 import { store, history, persistor } from './configureStore';
+import Result from './containers/result/Result';
 
 const App = () =>
   <CssBaseline>
@@ -17,6 +18,7 @@ const App = () =>
           <Switch>
             <Route exact path="/" component={Start} />
             <Route exact path="/question/:id" component={Question} />
+            <Route exact path="/result" component={Result} />
           </Switch>
         </ConnectedRouter>
       </PersistGate>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -13,8 +13,12 @@ const styles = {
   },
 };
 
-function SliderQuestion({ title, options, onChange, classes }) {
+function SliderQuestion({ title, options, onChange, classes, questionId }) {
   const [value, setValue] = useState(2);
+
+  useEffect(() => {
+    setValue(2);
+  }, [questionId])
 
   function handleOnChange(event, newValue) {
     setValue(newValue);
@@ -55,6 +59,7 @@ function SliderQuestion({ title, options, onChange, classes }) {
 SliderQuestion.propTypes = {
   onChange: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  questionId: PropTypes.number.isRequired,
   classes: PropTypes.shape({}).isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({

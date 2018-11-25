@@ -58,18 +58,21 @@ function Question({ match, classes, data, setData, push, finishGame }) {
     switch (currentQuestion.type) {
       case QUESTION_TYPES.RADIO: {
         return <RadioQuestion
+          questionId={currentQuestion.id}
           title={currentQuestion.title}
           options={currentQuestion.options}
           onChange={handleOnChange} />
       }
       case QUESTION_TYPES.CHECKBOX: {
         return <CheckboxQuestion
+          questionId={currentQuestion.id}
           title={currentQuestion.title}
           options={currentQuestion.options}
           onChange={handleOnChange} />
       }
       case QUESTION_TYPES.ICON_CHECKBOX: {
         return <CheckboxQuestion
+          questionId={currentQuestion.id}
           title={currentQuestion.title}
           isIconCheckbox={true}
           options={currentQuestion.options}
@@ -77,6 +80,7 @@ function Question({ match, classes, data, setData, push, finishGame }) {
       }
       case QUESTION_TYPES.SLIDER: {
         return <SliderQuestion
+          questionId={currentQuestion.id}
           title={currentQuestion.title}
           options={currentQuestion.options}
           onChange={handleOnChange} />
@@ -92,7 +96,7 @@ function Question({ match, classes, data, setData, push, finishGame }) {
       <Paper className={classes.paper}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Progress value={22} />
+            <Progress value={currentQuestion.id - 1} max={questions.length - 1} />
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h4" gutterBottom>

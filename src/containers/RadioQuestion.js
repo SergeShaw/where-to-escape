@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 
-function RadioQuestion({ title, options, onChange }) {
+function RadioQuestion({ title, options, onChange, questionId }) {
   const [value, setValue] = useState(undefined);
+
+  useEffect(() => {
+    setValue(undefined);
+  }, [questionId])
 
   function handleOnChange(event) {
     const newValue = event.target.value;
@@ -50,6 +54,7 @@ function RadioQuestion({ title, options, onChange }) {
 
 RadioQuestion.propTypes = {
   onChange: PropTypes.func.isRequired,
+  questionId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({

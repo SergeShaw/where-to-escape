@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -6,8 +7,12 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 
-function CheckboxQuestion({ options, isIconCheckbox, onChange }) {
+function CheckboxQuestion({ options, isIconCheckbox, onChange, questionId }) {
   const [selectedOptions, setSelectedOptions] = useState([]);
+
+  useEffect(() => {
+    setSelectedOptions([]);
+  }, [questionId])
 
   function handleChange(event) {
     const { checked, name } = event.target;
@@ -81,5 +86,18 @@ function CheckboxQuestion({ options, isIconCheckbox, onChange }) {
     </FormGroup>
   );
 }
+
+CheckboxQuestion.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  questionId: PropTypes.number.isRequired,
+  isIconCheckbox: PropTypes.bool,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    text: PropTypes.string.isRequired,
+  })).isRequired,
+};
+
+CheckboxQuestion.defaultProps = {
+  isIconCheckbox: false,
+};
 
 export default CheckboxQuestion;

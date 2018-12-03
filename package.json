@@ -7,6 +7,7 @@
     "@material-ui/icons": "^3.0.1",
     "@material-ui/lab": "^3.0.0-alpha.23",
     "connected-react-router": "^5.0.1",
+    "node-sass": "^4.10.0",
     "papaparse": "^4.6.1",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
@@ -16,9 +17,9 @@
     "react-scripts": "2.1.1",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
+    "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
-    "redux-thunk": "^2.3.0",
-    "redux-logger": "^3.0.6"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
